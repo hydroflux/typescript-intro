@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
+import { charactersURL, parseHTTPResponse } from './helpers/utilities';
+// import { parseHTTPResponse } from './helpers/utilities';
 import { Character } from './types';
 
 // Interfaces indicate that an object must always have certain elements in it
@@ -22,9 +24,8 @@ export class App extends Component<{}, IAppState> {
   }
 
   componentDidMount(){
-    const characters_url = "https://rickandmortyapi.com/api/character"
-    fetch( characters_url )
-      .then( response => response.json() )
+    fetch( charactersURL )
+      .then( parseHTTPResponse )
       .then( ({ results }) => this.setState({ characters: results as Character[] }))
   }
 
