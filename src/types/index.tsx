@@ -1,28 +1,18 @@
-export interface Character {
+export interface ICharacter {
     id: number,
     name: string,
     species: string,
     type: string,
     gender: string,
-    origin: Pointer,
-    location: Pointer,
+    origin: IPointer,
+    location: IPointer,
     image: string,
     episode: string[],
     url: string,
     created: string
 }
 
-// Location & Origin use the same format --- creating a new interface for this structure
-// origin: {
-//     name: string,
-//     url: string
-// },
-// location: {
-//     name: string,
-//     url: string
-// },
-
-interface Pointer {
+interface IPointer {
     name: string,
     url: string
 }

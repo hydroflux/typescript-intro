@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
+import CharacterCard from './components/CharacterCard';
 import { charactersURL, parseHTTPResponse } from './helpers/utilities';
-// import { parseHTTPResponse } from './helpers/utilities';
-import { Character } from './types';
+import { ICharacter } from './types';
 
 // Interfaces indicate that an object must always have certain elements in it
 //  putting 'i' in front of an interface is common shorthand to indicate an interface
@@ -10,7 +10,7 @@ import { Character } from './types';
 
 interface IAppState {
   name: string
-  characters: Character[]
+  characters: ICharacter[]
 }
 
 export class App extends Component<{}, IAppState> {
@@ -26,13 +26,20 @@ export class App extends Component<{}, IAppState> {
   componentDidMount(){
     fetch( charactersURL )
       .then( parseHTTPResponse )
-      .then( ({ results }) => this.setState({ characters: results as Character[] }))
+      .then( ({ results }) => this.setState({ characters: results as ICharacter[] }))
+  }
+
+  showCharacters = () => {
+    return this.state.characters.map( character => {
+      return <CharacterCard key={character.id} character={character} />
+    })
   }
 
   render(){
     return(
       <div className="App">
         <h1>Welcome {this.state.name}</h1>
+        { this.showCharacters() }
       </div>
     )
   }
