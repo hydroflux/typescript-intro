@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import { Character } from './types';
 
 // Interfaces indicate that an object must always have certain elements in it
 //  putting 'i' in front of an interface is common shorthand to indicate an interface
@@ -7,7 +8,7 @@ import './App.css';
 
 interface IAppState {
   name: string
-  characters: {}[]
+  characters: Character[]
 }
 
 export class App extends Component<{}, IAppState> {
@@ -20,9 +21,17 @@ export class App extends Component<{}, IAppState> {
     }
   }
 
+  componentDidMount(){
+    const characters_url = "https://rickandmortyapi.com/api/character"
+    fetch( characters_url )
+      .then( response => response.json() )
+      .then( ({ results }) => this.setState({ characters: results as Character[] }))
+  }
+
   render(){
     return(
       <div className="App">
+        <h1>Welcome {this.state.name}</h1>
       </div>
     )
   }
