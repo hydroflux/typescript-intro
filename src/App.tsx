@@ -11,6 +11,7 @@ import { ICharacter } from './types';
 interface IAppState {
   name: string
   characters: ICharacter[]
+  // someFunction: () => void
 }
 
 export class App extends Component<{}, IAppState> {
@@ -20,6 +21,7 @@ export class App extends Component<{}, IAppState> {
     this.state = {
       name: 'Jack',
       characters: []
+      // someFunction: () => {}
     }
   }
 
