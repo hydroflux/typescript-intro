@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import CharacterCard from './components/CharacterCard';
 import { charactersURL, parseHTTPResponse } from './helpers/utilities';
@@ -8,43 +8,28 @@ import { ICharacter } from './types';
 //  putting 'i' in front of an interface is common shorthand to indicate an interface
 //  interfaces are like contracts for objects
 
-interface IAppState {
-  name: string
-  characters: ICharacter[]
-  // someFunction: () => void
-}
+const App: React.FC<{}> = () => {
 
-export class App extends Component<{}, IAppState> {
+  const [ characters , setCharacters ] = useState<ICharacter[]>([])
 
-  constructor( props: {} ) {
-    super(props)
-    this.state = {
-      name: 'Jack',
-      characters: []
-      // someFunction: () => {}
-    }
-  }
-
-  componentDidMount(){
+  useEffect( () => {
     fetch( charactersURL )
       .then( parseHTTPResponse )
-      .then( ({ results }) => this.setState({ characters: results as ICharacter[] }))
-  }
+      .then( ({ results }) => setCharacters( results ) )
+  }, [])
 
-  showCharacters = () => {
-    return this.state.characters.map( character => {
+  const showCharacters = () => {
+    return characters.map( character => {
       return <CharacterCard key={character.id} character={character} />
     })
   }
 
-  render(){
-    return(
-      <div className="App">
-        <h1>Welcome {this.state.name}</h1>
-        { this.showCharacters() }
-      </div>
-    )
-  }
+  return (
+    <div className="App">
+      <h1>Welcome</h1>
+      { showCharacters() }
+    </div>
+  )
 }
 
 export default App;
